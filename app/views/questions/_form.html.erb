@@ -1,0 +1,33 @@
+<%= form_for @question do |f| %>
+  <% if question.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+        <% question.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :header, style: "display: block" %>
+    <%= f.text_field :header %>
+  </div>
+
+  <div>
+    <%= f.label :question_type, style: "display: block" %>
+    <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]} %>
+  </div>
+
+  <div>
+    <%= f.fields_for :multiple_choices do |multiple_choice_form| %>
+          <%= render "multiple_choice_fields", f: multiple_choice_form %>
+    <%end%>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
