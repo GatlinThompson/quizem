@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_040220) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_09_050544) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_040220) do
   create_table "multiple_choices", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "option"
-    t.boolean "is_correct"
+    t.boolean "is_correct", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_multiple_choices_on_question_id"

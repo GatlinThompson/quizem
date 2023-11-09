@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   def new
     @question = Question.new
-    2.times { @question.multiple_choices.build }
+    build_multiple_choice(4)
   end
 
   # GET /questions/1/edit
@@ -29,7 +29,10 @@ class QuestionsController < ApplicationController
         format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
         format.json { render :show, status: :created, location: @question }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        build_multiple_choice(4)
+  
+         
+         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
     end
@@ -68,4 +71,8 @@ class QuestionsController < ApplicationController
     def question_params
       params.require(:question).permit(:header, :question_type, multiple_choices_attributes: [:id, :option, :is_correct])
     end
+
+    def build_multiple_choice(count)
+    count.times { @question.multiple_choices.build }
+  end
 end
