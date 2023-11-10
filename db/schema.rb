@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_050544) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_10_212020) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -65,7 +65,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_050544) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "true_falses", force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.boolean "correct_answer", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_true_falses_on_question_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "multiple_choices", "questions"
+  add_foreign_key "true_falses", "questions"
 end

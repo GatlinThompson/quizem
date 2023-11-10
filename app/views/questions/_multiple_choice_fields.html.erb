@@ -1,6 +1,7 @@
-<div class="nested-fields">
+<div class="d-flex">
   <%= f.label :option %>
   <%= f.text_field :option %>
-  <%= f.check_box :is_correct, {class: 'mc-correct'} %>
+  
+  <%= f.check_box :is_correct, {class: 'mc-option ms-3'} %>
+  <%= f.label :is_correct,  "The Correct Answer"%>
 </div>
-

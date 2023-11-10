@@ -18,12 +18,19 @@
 
   <div>
     <%= f.label :question_type, style: "display: block" %>
-    <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]} %>
+    <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
+     { include_blank: "Select a Question Type:"}, { disabled: Question.where(id: question.id).exists?} %>
   </div>
 
   <div>
     <%= f.fields_for :multiple_choices do |multiple_choice_form| %>
           <%= render "multiple_choice_fields", f: multiple_choice_form %>
+    <%end%>
+  </div>
+
+  <div>
+    <%= f.fields_for :true_false do |true_false_form| %>
+          <%= render "true_false_fields", f: true_false_form %>
     <%end%>
   </div>
 
@@ -34,12 +41,39 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  const checkBoxes = document.querySelectorAll(".mc-correct");
+    //
+      var checkBoxes = document.querySelectorAll(".mc-option");
 
-  checkBoxes.forEach((checkBox) => {
-    checkBox.addEventListener('change', function(obj) {
-    });
-  });
-});
+      var setUp = false;
+      for ( const checkbox of checkBoxes) {
+          
+          if (checkbox.checked ==  true) {
+            setUp = false
+            break;9
+          }
+          else {
+            setUp = true
+            
+          }
+        }
+
+      if (setUp) {
+        checkBoxes[0].checked = true
+      }
+
+      
+
+    //Loops through each checkbox with .mc-correct class 
+    for ( const checkbox of checkBoxes) {
+      checkbox.addEventListener('change', () => {
+        for ( const checkbox of checkBoxes) {
+          checkbox.checked = false
+         }
+        //Checks this checkbox
+        checkbox.checked = true
+      });
+    }
+
+
+
 </script>

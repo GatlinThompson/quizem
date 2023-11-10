@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     build_multiple_choice(4)
+    @question.build_true_false
   end
 
   # GET /questions/1/edit
@@ -23,14 +24,30 @@ class QuestionsController < ApplicationController
   # POST /questions or /questions.json
   def create
     @question = Question.new(question_params)
+    puts "########################################################"
+    puts @question.question_type
+    if @question.question_type == 'multiple_choice' then
+       puts "sssssssssssssssssssssssssssssssssssssssssssssssss"
+    end
+    puts @question.multiple_choices
+    puts "########################################################"
+
+   
 
     respond_to do |format|
       if @question.save
         format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
         format.json { render :show, status: :created, location: @question }
       else
-        build_multiple_choice(4)
-  
+
+        unless @question.multiple_choice? then
+          build_multiple_choice(4)
+        end
+           
+
+      
+
+        @question.build_true_false
          
          format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -69,7 +86,7 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:header, :question_type, multiple_choices_attributes: [:id, :option, :is_correct])
+      params.require(:question).permit(:header, :question_type, multiple_choices_attributes: [:id, :option, :is_correct], true_false_attributes: [:id, :correct_answer])
     end
 
     def build_multiple_choice(count)
