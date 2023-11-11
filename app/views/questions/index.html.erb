@@ -1,6 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Questions</h1>
+<script>
+  function submitOnChange(event) {
+    console.log(event)
+      event.preventDefault();
+      event.target.form.submit();
+    }
+</script>
+
+<%= form_with url: search_by_bank_questions_url, method: :get do |f| %>
+  <%= f.label :search_by_bank, "Search for:" %>
+  <%= f.select :search_by_bank, options_for_select([['All' , nil]] + Question.group(:bank).map {|question| [question.bank.titleize, question.bank]}),
+    { include_blank: "Search for Question Bank"}, {onChange: "submitOnChange(event)"} %>
+<% end %>
+
 
 <div id="questions">
   <% @questions.each do |question| %>

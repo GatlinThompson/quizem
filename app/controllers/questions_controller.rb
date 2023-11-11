@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions or /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.order(:bank)
   end
 
   # GET /questions/1 or /questions/1.json
@@ -16,18 +16,28 @@ class QuestionsController < ApplicationController
     build_multiple_choice(4)
     build_multiple_answers(4)
     @question.build_true_false
+    @banks = Bank.all
   end
 
   # GET /questions/1/edit
   def edit
+    @question.new_bank = nil
   end
 
   # POST /questions or /questions.json
   def create
     @question = Question.new(question_params)
+
+      if params[:question][:new_bank].present?
+        @question.bank = params[:question][:new_bank]
+      end
+
+      @question.bank =  @question.bank.downcase
+
+
     respond_to do |format|
       if @question.save
-        format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
+        format.html { redirect_to question_url(@question.id), notice: "Question was successfully created." }
         format.json { render :show, status: :created, location: @question }
       else
 
@@ -49,6 +59,10 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions/1 or /questions/1.json
   def update
+    if params[:question][:new_bank].present?
+        params[:question][:bank] = params[:question][:new_bank]
+    end
+    
     respond_to do |format|
       if @question.update(question_params)
         format.html { redirect_to question_url(@question), notice: "Question was successfully updated." }
@@ -70,6 +84,17 @@ class QuestionsController < ApplicationController
     end
   end
 
+  #GET searches questions by bank
+  def search_by_bank 
+    @questions = unless params[:search_by_bank].blank?
+      Question.where(bank: params[:search_by_bank])
+    else
+      Question.all
+    end
+    render 'index'
+
+    end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
@@ -78,10 +103,11 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:title, :question_type, :bank, 
-        multiple_choices_attributes: [:id, :option, :is_correct], 
+      params.require(:question).permit(:id, :title, :question_type, :bank, :new_bank,
+        multiple_choices_attributes: [:id, :option, :is_correct, :_destroy], 
         true_false_attributes: [:id, :correct_answer],
-        multiple_answers_attributes: [:id, :option, :is_correct] )
+        multiple_answers_attributes: [:id, :option, :is_correct, :_destroy],
+        bank_attributes: [:bank] )
     end
 
     def build_multiple_choice(count)
@@ -91,4 +117,5 @@ class QuestionsController < ApplicationController
     def build_multiple_answers(count)
       count.times { @question.multiple_answers.build }
     end
+
 end

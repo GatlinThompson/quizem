@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :questions
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :quizzes
+  resources :questions do
+      get "search_by_bank", on: :collection
+  end
 
-  # Defines the root path route ("/")
   root "questions#index"
 end

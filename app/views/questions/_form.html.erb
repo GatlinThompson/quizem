@@ -16,11 +16,17 @@
     <%= f.rich_text_area :title %>
   </div>
 
+  
   <div>
-    <%= f.label :bank, style: "display: block" %>
-    <%= f.text_field :bank %>
-  </div>
-
+    <%= f.label :bank, 'Question Bank' %>
+    <%= f.select :bank, Question.group(:bank).map {|question| [question.bank.titleize, question.bank]},
+    { include_blank: "Select a question bank or create a new one"} %>
+    <p>or</p>
+     <%= f.label :new_bank, 'New Question Bank' %>
+  <%= f.text_field :new_bank %>
+</div>
+   
+    
 
 
  <% unless Question.where(id: question.id).exists? then %> 
@@ -60,7 +66,7 @@
 
 
     <%= f.fields_for :multiple_answers do |multiple_answer_form| %>
-          <%= render "multiple_answer_fields", f: multiple_answer_form%>
+          <%= render "multiple_answer_fields", f: multiple_answer_form %>
     <%end%>
   </div>
 
@@ -81,10 +87,10 @@
 <% end %>
 
 
-<% #Form Scripts %>
+<%#Form Scripts %>
 <%= javascript_include_tag "multiple_choice.js" %>
 
-<% #Question type selection change script %>
+<%#Question type selection change script %>
 <% unless Question.where(id: question.id).exists? then %> 
  <%= javascript_include_tag "question_type.js" %>
 <% end %>
