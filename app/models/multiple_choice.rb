@@ -1,5 +1,5 @@
 class MultipleChoice < ApplicationRecord
-  belongs_to :question, optional: true
+  belongs_to :question
 
   validates :option, presence: true, if: :question_multiple_choice?
 

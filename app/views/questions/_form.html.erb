@@ -11,24 +11,65 @@
     </div>
   <% end %>
 
-  <div>
-    <%= f.label :header, style: "display: block" %>
-    <%= f.text_field :header %>
+  <div class="w-50">
+    <%= f.label :header,"Question", style: "display: block" %>
+    <%= f.rich_text_area :title %>
   </div>
 
   <div>
-    <%= f.label :question_type, style: "display: block" %>
-    <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
-     { include_blank: "Select a Question Type:"}, { disabled: Question.where(id: question.id).exists?} %>
+    <%= f.label :bank, style: "display: block" %>
+    <%= f.text_field :bank %>
   </div>
 
-  <div>
+
+
+ <% unless Question.where(id: question.id).exists? then %> 
+    <div>
+      <%= f.label :question_type, style: "display: block" %>
+      <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
+      { include_blank: "Select a Question Type:"}, { id: "question-type-selection" } %>
+    </div>
+  <% else %>
+    <div>
+      <p>
+      <strong>Question type:</strong>
+      <%= question.question_type.titleize %>
+      </p>
+    </div>
+
+  <% end %>
+
+
+
+  <div id="mc-form" 
+  <% unless question.question_type == 'multiple_choice' then %>
+  style="display: none"
+  <% end %>
+  >
     <%= f.fields_for :multiple_choices do |multiple_choice_form| %>
           <%= render "multiple_choice_fields", f: multiple_choice_form %>
     <%end%>
   </div>
 
-  <div>
+
+   <div id="ma-form" 
+  <% unless question.question_type == 'multiple_answers' then %>
+  style="display: none"
+  <% end %>
+  >
+
+
+    <%= f.fields_for :multiple_answers do |multiple_answer_form| %>
+          <%= render "multiple_answer_fields", f: multiple_answer_form%>
+    <%end%>
+  </div>
+
+
+  <div id="tf-form" <% unless question.question_type == 'true_false' then %>
+  style="display: none"
+  <% end %>
+  >
+
     <%= f.fields_for :true_false do |true_false_form| %>
           <%= render "true_false_fields", f: true_false_form %>
     <%end%>
@@ -40,40 +81,10 @@
 <% end %>
 
 
-<script>
-    //
-      var checkBoxes = document.querySelectorAll(".mc-option");
+<% #Form Scripts %>
+<%= javascript_include_tag "multiple_choice.js" %>
 
-      var setUp = false;
-      for ( const checkbox of checkBoxes) {
-          
-          if (checkbox.checked ==  true) {
-            setUp = false
-            break;9
-          }
-          else {
-            setUp = true
-            
-          }
-        }
-
-      if (setUp) {
-        checkBoxes[0].checked = true
-      }
-
-      
-
-    //Loops through each checkbox with .mc-correct class 
-    for ( const checkbox of checkBoxes) {
-      checkbox.addEventListener('change', () => {
-        for ( const checkbox of checkBoxes) {
-          checkbox.checked = false
-         }
-        //Checks this checkbox
-        checkbox.checked = true
-      });
-    }
-
-
-
-</script>
+<% #Question type selection change script %>
+<% unless Question.where(id: question.id).exists? then %> 
+ <%= javascript_include_tag "question_type.js" %>
+<% end %>

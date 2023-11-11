@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     build_multiple_choice(4)
+    build_multiple_answers(4)
     @question.build_true_false
   end
 
@@ -24,16 +25,6 @@ class QuestionsController < ApplicationController
   # POST /questions or /questions.json
   def create
     @question = Question.new(question_params)
-    puts "########################################################"
-    puts @question.question_type
-    if @question.question_type == 'multiple_choice' then
-       puts "sssssssssssssssssssssssssssssssssssssssssssssssss"
-    end
-    puts @question.multiple_choices
-    puts "########################################################"
-
-   
-
     respond_to do |format|
       if @question.save
         format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
@@ -43,10 +34,11 @@ class QuestionsController < ApplicationController
         unless @question.multiple_choice? then
           build_multiple_choice(4)
         end
+
+        unless @question.multiple_answers? then
+          build_multiple_answers(4)
+        end
            
-
-      
-
         @question.build_true_false
          
          format.html { render :new, status: :unprocessable_entity }
@@ -86,10 +78,17 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:header, :question_type, multiple_choices_attributes: [:id, :option, :is_correct], true_false_attributes: [:id, :correct_answer])
+      params.require(:question).permit(:title, :question_type, :bank, 
+        multiple_choices_attributes: [:id, :option, :is_correct], 
+        true_false_attributes: [:id, :correct_answer],
+        multiple_answers_attributes: [:id, :option, :is_correct] )
     end
 
     def build_multiple_choice(count)
-    count.times { @question.multiple_choices.build }
-  end
+      count.times { @question.multiple_choices.build }
+    end
+
+    def build_multiple_answers(count)
+      count.times { @question.multiple_answers.build }
+    end
 end

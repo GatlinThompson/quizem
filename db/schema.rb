@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_10_212020) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_11_002906) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_212020) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "multiple_answers", force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.string "option"
+    t.boolean "is_correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_multiple_answers_on_question_id"
+  end
+
   create_table "multiple_choices", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "option"
@@ -59,10 +68,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_212020) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "header"
+    t.text "title"
     t.string "question_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "bank"
   end
 
   create_table "true_falses", force: :cascade do |t|
@@ -75,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_212020) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "multiple_answers", "questions"
   add_foreign_key "multiple_choices", "questions"
   add_foreign_key "true_falses", "questions"
 end

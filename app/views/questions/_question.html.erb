@@ -1,8 +1,13 @@
 <div id="<%= dom_id question %>">
+  <h3>
+    <%= question.title %>
+  </h3>
+
   <p>
-    <strong>Header:</strong>
-    <%= question.header %>
+    <strong>Bank:</strong>
+    <%= question.bank.titleize %>
   </p>
+
 
   <p>
     <strong>Question type:</strong>
