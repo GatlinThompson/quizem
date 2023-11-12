@@ -16,7 +16,6 @@ class QuestionsController < ApplicationController
     build_multiple_choice(4)
     build_multiple_answers(4)
     @question.build_true_false
-    @banks = Bank.all
   end
 
   # GET /questions/1/edit
@@ -59,6 +58,7 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions/1 or /questions/1.json
   def update
+
     if params[:question][:new_bank].present?
         params[:question][:bank] = params[:question][:new_bank]
     end
