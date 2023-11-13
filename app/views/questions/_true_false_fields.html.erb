@@ -1,10 +1,12 @@
-<div>
-    <div>
-    <%= f.label :correct_answer_true, "True" %>
-    <%= f.radio_button :correct_answer, true %>
+<p class="fs-5">Correct Answer:</p>
+<div class="d-flex justify-content-start">
+    <div class="me-2">
+    <%= f.radio_button :correct_answer, true, class: "btn-check" %>
+    <%= f.label :correct_answer_true, "True", class: "btn btn-outline-primary px-4" %>
     </div>
-    <div>
-    <%= f.label :correct_answer_false, "False" %>
-    <%= f.radio_button :correct_answer, false %>
+    <div class="ms-2">
+    
+    <%= f.radio_button :correct_answer, false, class: "btn-check" %>
+    <%= f.label :correct_answer_false, "False", class: "btn btn-outline-primary px-4" %>
     </div>
 </div>

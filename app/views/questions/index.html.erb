@@ -1,29 +1,53 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Questions</h1>
-<script>
-  function submitOnChange(event) {
-    console.log(event)
-      event.preventDefault();
-      event.target.form.submit();
-    }
-</script>
 
-<%= form_with url: search_by_bank_questions_url, method: :get do |f| %>
-  <%= f.label :search_by_bank, "Search for:" %>
-  <%= f.select :search_by_bank, options_for_select([['All' , nil]] + Question.group(:bank).map {|question| [question.bank.titleize, question.bank]}),
-    { include_blank: "Search for Question Bank"}, {onChange: "submitOnChange(event)"} %>
-<% end %>
+<div class="row pb-4 align-items-center">
+  
+  <div class="col">
+    <%= link_to "New Question", new_question_path , class: "col btn btn-primary fs-4"%>
+  </div>
+  
+  <div class="col-3">
+    <%= form_with url: search_by_questions_url, method: :get, class: "form" do |f| %>
+      <%#Question Bank Filter%>
+      <div class="mb-2">
+        <%= f.select :search_by_bank, options_for_select(
+        [['All' , nil]] + Question.group(:bank).map {|question| [question.bank.titleize, question.bank]}, 
+        selected: params[:search_by_bank]),
+        { include_blank: "Search by Question Bank"}, {
+         class: "form-select"} %>
+      </div>
 
+      <%#Question Type Filter%>
+      <div class="mb-3">
+         <%= f.select :search_by_question_type, options_for_select(
+       [['All' , nil]] + Question.group(:question_type).map {|question| [question.question_type.titleize, question.question_type]}, 
+       selected: params[:search_by_question_type]),
+       { include_blank: "Search by Question Type"}, {
+       class: "form-select"} %>
+      </div>
+      <%#Filter Submit%>
+      <div class="d-flex justify-content-end">
+         <%= f.submit 'Filter', class: "btn btn-outline-primary"%>
+      </div>
+    <% end %>
 
-<div id="questions">
-  <% @questions.each do |question| %>
-    <%= render question %>
-    <p>
-      <%= link_to "Show this question", question %>
-    </p>
-    <hr>
-  <% end %>
+    <% unless params[:search_by_bank].blank? && params[:search_by_question_type].blank? %>
+    <div class="d-flex  justify-content-end">
+      <p class=" danger-emphasis mb-0 mt-3">
+        <%= @questions.count %> result<%= (@questions.count > 1 || @questions.empty?) ? "s" : ""%> found
+      </p>
+      <% end %>
+    </div>
 </div>
 
-<%= link_to "New question", new_question_path %>
+
+<p class="fs-5 text-success"><%= notice %></p>
+
+
+<div id="questions" class="pb-5">
+  <% @questions.each do |question| %>
+  <hr>
+    <%= render question %>
+    
+  <% end %>
+</div>

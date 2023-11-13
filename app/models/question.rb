@@ -9,11 +9,8 @@ class Question < ApplicationRecord
         essay: "essay" 
     }
 
+    #For when user creates a new bank on question
     attr_accessor :new_bank
-
-    #Bank
-    #belongs_to :bank
-    #accepts_nested_attributes_for :bank, reject_if: :all_blank
 
     #Multiple Choice Validation
     has_many :multiple_choices, inverse_of: :question, dependent: :destroy
@@ -27,10 +24,13 @@ class Question < ApplicationRecord
     has_many :multiple_answers, inverse_of: :question, dependent: :destroy
     accepts_nested_attributes_for :multiple_answers, reject_if: :not_multiple_answers?
 
+    #Quiz Question Assocations
+    has_many :quizzes, through: :quiz_questions
 
+    has_many :quiz_questions, dependent: :destroy
     
-
     private 
+    #Question Type Checkers
     def not_multiple_choice?
         question_type != 'multiple_choice' 
     end
@@ -42,4 +42,7 @@ class Question < ApplicationRecord
     def not_multiple_answers?
         question_type != 'multiple_answers' 
     end
+
+     
+  
 end

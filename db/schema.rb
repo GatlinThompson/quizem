@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_11_211734) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_12_191527) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -75,6 +75,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_211734) do
     t.string "bank"
   end
 
+  create_table "questions_quizzes", id: false, force: :cascade do |t|
+    t.integer "quiz_id", null: false
+    t.integer "question_id", null: false
+    t.integer "points"
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.integer "quiz_id", null: false
+    t.integer "question_id", null: false
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_quiz_questions_on_question_id"
+    t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
+  end
+
   create_table "quizzes", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -93,5 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_211734) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "multiple_answers", "questions"
   add_foreign_key "multiple_choices", "questions"
+  add_foreign_key "quiz_questions", "questions"
+  add_foreign_key "quiz_questions", "quizzes"
   add_foreign_key "true_falses", "questions"
 end

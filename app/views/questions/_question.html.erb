@@ -1,17 +1,57 @@
 <div id="<%= dom_id question %>">
-  <h3>
-    <%= question.title %>
-  </h3>
 
-  <p>
-    <strong>Bank:</strong>
-    <%= question.bank.titleize %>
-  </p>
+  <%#Question Bank and Type%>
+  <div class="d-flex justify-content-end pt-3 text-secondary" >
+    <p>
+      <strong>Question Type:</strong>
+      <%= question.question_type.titleize %>
+    </p>
+    <p class="ms-5">
+      <strong>Question Bank:</strong>
+      <%= question.bank.titleize %>
+    </p>
+  </div>
+  
+  <%#Question Title%>
+  <div class="py-4">
+    <h2>Question:</h2>
+    <div class="fs-4">
+      <%= question.title %>
+    </div>
+  </div>
+
+  <%#Question Type Display%>
+  <div class= "p-3">
+    <% if question.true_false?%>
+       <div class="alert <%= question.true_false.correct_answer? ? 'alert-success fw-bold' : 'alert-secondary' %>">
+        True  
+      </div>
+      <div class="alert <%= question.true_false.correct_answer? ? 'alert-secondary' : 'alert-success fw-bold' %>">
+        False 
+      </div>
+    <% end %>
+ 
+    <% if question.multiple_choice?%>
+      <% question.multiple_choices.each do |choice|%>
+        <%#questions/question_option for when it's rendered in quizzes%>
+        <%= render "questions/question_option", choice: choice %>
+      <%end%>
+    <% end %>
+
+    <% if question.multiple_answers?%>
+      <% question.multiple_answers.each do |answer|%>
+        <%#questions/question_option for when it's rendered in quizzes%>
+        <%= render "questions/question_option", choice: answer %>
+      <%end%>
+    <% end %>
+  </div>
 
 
-  <p>
-    <strong>Question type:</strong>
-    <%= question.question_type.titleize %>
-  </p>
+  
+  <%#Edit and Delete Buttons%>
+  <div class="d-flex justify-content-between align-items-end px-3 my-2 pb-4">
+    <%= link_to edit_question_path(question), class: "btn btn-outline-primary px-5 mx-0 fs-4" do%> Edit <% end %>
+    <%= button_to "Delete Question", question, method: :delete, class: " fs-5 fs-bold ms-auto btn btn-outline-danger py-0 px-2" %>
+  </div>
 
 </div>

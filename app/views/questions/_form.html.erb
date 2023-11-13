@@ -1,4 +1,4 @@
-<%= form_for @question do |f| %>
+<%= form_for question do |f| %>
   <% if question.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
@@ -11,78 +11,89 @@
     </div>
   <% end %>
 
-  <div class="w-50">
-    <%= f.label :header,"Question", style: "display: block" %>
-    <%= f.rich_text_area :title %>
+  <%#Question Title%>
+  <div class="border  rounded px-4 pb-4 pt-2">
+    <%= f.label :title,"Question:", { style: "display: block", for: "question_title_trix_input_question_#{question.id}",  class: "fs-4 form-label"} %>
+    <%= f.rich_text_area :title, class: "form-control border border-secondary-subtle", placeholder: "Type your question here" %>
   </div>
 
-  
-  <div>
-    <%= f.label :bank, 'Question Bank' %>
+  <%#Question Bank Fields%>
+  <div class="row align-items-center mt-4">
+    <div class="col">
+      <%= f.label :bank, 'Existing Question Bank', style: "display: block", class: "form-label fs-5"%>
     <%= f.select :bank, Question.group(:bank).map {|question| [question.bank.titleize, question.bank]},
-    { include_blank: "Select a question bank or create a new one"} %>
-    <p>or</p>
-     <%= f.label :new_bank, 'New Question Bank' %>
-  <%= f.text_field :new_bank %>
-</div>
-   
-    
-
-
- <% unless Question.where(id: question.id).exists? then %> 
-    <div>
-      <%= f.label :question_type, style: "display: block" %>
-      <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
-      { include_blank: "Select a Question Type:"}, { id: "question-type-selection" } %>
+    { include_blank: "Choose an existing question bank"}, {class: "form-select border border-secondary-subtle"}%>
     </div>
-  <% else %>
-    <div>
-      <p>
-      <strong>Question type:</strong>
-      <%= question.question_type.titleize %>
-      </p>
+    <div class="col-1 text-center">
+    <p class="m-0 fw-light text-secondary">OR</p>
     </div>
+    <div class="col">
+      <%= f.label :new_bank, 'New Question Bank', style: "display: block", class: "form-label fs-5" %>
+      <%= f.text_field :new_bank, class: "form-control border border-secondary-subtle", placeholder: "Create a new question bank"%>
+    </div>   
+  </div>
 
-  <% end %>
+  <%#Question Type Select%>
+  <div class="row my-4"> 
+    <% unless Question.where(id: question.id).exists? then %> 
+      <div class="col-5">
+        <%= f.label :question_type, {style: "display: block", for: "question-type-selection", class: "form-label fs-5" }  %>
+        <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
+        { include_blank: "Select a Question Type:"}, { id: "question-type-selection", onChange: "changeNestedForm(event)", 
+        class: "form-control border border-secondary-subtle"} %>
+      </div>
+    <% else %>
+      <div class="col">
+        <p class="m-0 fs-4">
+        <strong>Question Type:</strong>
+        <%= question.question_type.titleize %>
+        </p>
+      </div>
+    <% end %>
+  </div> 
+  <hr>
 
+  <%#Different Form Renders%>
+  <div class="row">
 
-
-  <div id="mc-form" 
-  <% unless question.question_type == 'multiple_choice' then %>
-  style="display: none"
-  <% end %>
-  >
-    <%= f.fields_for :multiple_choices do |multiple_choice_form| %>
+    <%#Multiple Choice Render%>
+    <div id="mc-form" <% unless question.question_type == 'multiple_choice' then %>
+      style="display: none"
+    <% end %> >
+      <div class="row">
+        <%= f.fields_for :multiple_choices do |multiple_choice_form| %>
           <%= render "multiple_choice_fields", f: multiple_choice_form %>
-    <%end%>
-  </div>
+        <%end%>
+      </div>
+      <hr class="my-4">
+    </div>
 
-
-   <div id="ma-form" 
-  <% unless question.question_type == 'multiple_answers' then %>
-  style="display: none"
-  <% end %>
-  >
-
-
-    <%= f.fields_for :multiple_answers do |multiple_answer_form| %>
+    <%#Multiple Answer Render%>
+    <div id="ma-form" <% unless question.question_type == 'multiple_answers' then %>
+      style="display: none"
+    <% end %> >
+      <div class="row">
+        <%= f.fields_for :multiple_answers do |multiple_answer_form| %>
           <%= render "multiple_answer_fields", f: multiple_answer_form %>
-    <%end%>
-  </div>
+        <%end%>
+      </div>
+      <hr class="my-4">
+    </div>
 
-
-  <div id="tf-form" <% unless question.question_type == 'true_false' then %>
-  style="display: none"
-  <% end %>
-  >
-
-    <%= f.fields_for :true_false do |true_false_form| %>
+    <%#True False Render%>
+    <div id="tf-form" <% unless question.question_type == 'true_false' then %>
+      style="display: none"
+    <% end %> >
+      <%= f.fields_for :true_false do |true_false_form| %>
           <%= render "true_false_fields", f: true_false_form %>
-    <%end%>
-  </div>
+      <%end%>
+      <hr class="my-4">
+    </div>
 
-  <div>
-    <%= f.submit %>
+  </div>
+  <%#Form Submission%>
+  <div class="mt-4">
+    <%= f.submit class: "btn btn-primary fs-4 py-2"%>
   </div>
 <% end %>
 

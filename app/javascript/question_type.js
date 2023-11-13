@@ -1,8 +1,5 @@
-//Gets ID from question_type dropdown
-var optionSelect = document.getElementById("question-type-selection");
-
 //Changes form view based on question_type value
-function changNestedForm(section) {
+function changeNestedForm(event) {
   //Variables
   const tfForm = document.getElementById("tf-form");
   const mcForm = document.getElementById("mc-form");
@@ -14,7 +11,7 @@ function changNestedForm(section) {
   maForm.style.display = "none";
 
   //Question section switch
-  switch (section) {
+  switch (event.target.value) {
     case "multiple_choice":
       mcForm.style.display = "block";
       break;
@@ -29,8 +26,3 @@ function changNestedForm(section) {
       mcForm.style.display = "none";
   }
 }
-
-//Event Listener for questio_type dropdown change
-optionSelect.addEventListener("change", () => {
-  changNestedForm(optionSelect.value);
-});

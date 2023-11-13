@@ -11,6 +11,12 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "New Question", new_question_url%>
+      <%= link_to "Question", questions_url%>
+      <%= link_to "Quizes", quizzes_url%>
+    </nav>
+    
     <div class="container pt-5">
       <%= yield %>
     </div>

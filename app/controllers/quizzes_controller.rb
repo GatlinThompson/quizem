@@ -13,6 +13,8 @@ class QuizzesController < ApplicationController
   # GET /quizzes/new
   def new
     @quiz = Quiz.new
+    @question = Question.all
+    #@quiz.questions.build
   end
 
   # GET /quizzes/1/edit
@@ -65,6 +67,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:name)
+      params.require(:quiz).permit(:name, question_ids: [])
     end
 end

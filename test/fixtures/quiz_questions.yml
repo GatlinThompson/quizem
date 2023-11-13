@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quiz: one
+  question: one
+  points_integer: MyString
+
+two:
+  quiz: two
+  question: two
+  points_integer: MyString

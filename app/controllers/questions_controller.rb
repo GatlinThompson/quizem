@@ -36,8 +36,8 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to question_url(@question.id), notice: "Question was successfully created." }
-        format.json { render :show, status: :created, location: @question }
+        format.html { redirect_to questions_url, notice: "Question was successfully created." }
+        format.json { render :index, status: :created, location: @question }
       else
 
         unless @question.multiple_choice? then
@@ -65,8 +65,8 @@ class QuestionsController < ApplicationController
     
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to question_url(@question), notice: "Question was successfully updated." }
-        format.json { render :show, status: :ok, location: @question }
+        format.html { redirect_to questions_url, notice: "Question was successfully updated." }
+        format.json { render :index, status: :ok, location: @question }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -85,9 +85,13 @@ class QuestionsController < ApplicationController
   end
 
   #GET searches questions by bank
-  def search_by_bank 
-    @questions = unless params[:search_by_bank].blank?
-      Question.where(bank: params[:search_by_bank])
+  def search_by
+    @questions = if !params[:search_by_bank].blank? && !params[:search_by_question_type].blank?
+      Question.where(bank: params[:search_by_bank], question_type: params[:search_by_question_type])
+    elsif !params[:search_by_bank].blank? && params[:search_by_question_type].blank?
+         Question.where(bank: params[:search_by_bank])
+    elsif params[:search_by_bank].blank? && !params[:search_by_question_type].blank?
+         Question.where(question_type: params[:search_by_question_type])
     else
       Question.all
     end

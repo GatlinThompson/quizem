@@ -16,7 +16,31 @@
     <%= form.text_field :name %>
   </div>
 
+  <!---Test-->
+  <div class="field">
+    <%= form.label :questions, 'Select Questions' %>
+    <%= form.collection_check_boxes(:question_ids, Question.all, :id, :title) %>
+  </div>
+
+
+  <% quiz.questions.each do|question|  %>
+      <%= render "questions/question", {question: question, dom_id: question.id } %>
+      <hr>
+  <% end %>
+
+  <h1>TEST</h1>
+  
+
+
   <div>
     <%= form.submit %>
   </div>
+
+  <!-- Submit Button -->
+
+  <!-- Vanilla JavaScript for Dynamic Question Fields -->
+ 
+
+
+  
 <% end %>
