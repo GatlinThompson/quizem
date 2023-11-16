@@ -8,13 +8,16 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/1 or /quizzes/1.json
   def show
+    puts "Showing quiz questions" + params.to_s
+    @quiz_questions = QuizQuestion.where(quiz_id: params[:id])
+    puts "finished quiz question querty"
   end
 
   # GET /quizzes/new
   def new
-    @quiz = Quiz.new
-    @question = Question.all
-    #@quiz.questions.build
+    @quiz = Quiz.new(quiz_questions: [QuizQuestion.new])
+    @questions = Question.all
+
   end
 
   # GET /quizzes/1/edit
@@ -62,11 +65,12 @@ class QuizzesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
+      @questions = Question.all
       @quiz = Quiz.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:name, question_ids: [])
+      params.require(:quiz).permit(:name, :quiz_quiz_question, quiz_questions_attributes: [:id, :points, :quiz_id, :question_id ])
     end
 end

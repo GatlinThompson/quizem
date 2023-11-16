@@ -1,0 +1,20 @@
+
+<%= turbo_frame_tag "quiz_question_#{form.index}" do %>
+  <%= form.hidden_field :id %>
+
+  <p>
+    <!- TODO: Filter out the question drop down for questions already used ->
+    <! TODO: add selection for quiz bank to filter on ->
+    <span>Select Question </span>
+    <%= form.select :question_id, @questions.map {|question| [question.title, question.id]},
+      { include_blank: ""}, {class: "form-select border border-secondary-subtle"}%>
+    <%= form.number_field :points, :type => "number", :step => "0.1", :min => "0", class: "form-control border border-secondary-subtle", placeholder: "Enter Points"%>
+  </p>
+
+
+  <%= form.submit "destroy quiz question", 
+        formaction: quiz_question_path(form.index, form.object.id), 
+        formmethod: :delete, 
+        formnovalidate: true, 
+        data: { turbo_frame: "quiz_question_#{form.index}" } %>
+<% end %>

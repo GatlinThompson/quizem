@@ -1,0 +1,16 @@
+<%# app/views/quiz_questions/create.turbo_stream.erb %>
+<%= fields model: @quiz do |form| %>
+  <%= form.fields_for :quiz_questions, child_index: params[:index] do |qq_form| %>
+    <%= turbo_stream.replace "add-quiz-question" do %>
+      <%= form.submit "Add quiz question", 
+            formaction: quiz_question_path(qq_form.index.to_i + 1), 
+            formmethod: :post, 
+            formnovalidate: true, 
+            id: "add-quiz-question" %>
+    <% end %>
+
+    <%= turbo_stream.append "quiz_questions" do %>
+      <%= render "quiz_questions", form: qq_form %>
+    <% end %>
+  <% end %>
+<% end %>
