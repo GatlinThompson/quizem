@@ -7,9 +7,9 @@
   <% if @quiz_questions.present? %>
     <h4>Quiz Questions</h4>
 
-    <%= @quiz_questions.each_with_index do |quiz_question, index| %>
+    <% @quiz_questions.each_with_index do |quiz_question, index| %>
       <h5>Question <%=index + 1%></h5>
-      <%= @questions[quiz_question.question_id].title %>
+      <%= quiz_question.question.title %>
       <p><strong>Points:</strong> <%= quiz_question.points %></p>
     <% end %>
   <% end %>

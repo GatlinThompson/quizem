@@ -8,16 +8,13 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/1 or /quizzes/1.json
   def show
-    puts "Showing quiz questions" + params.to_s
-    @quiz_questions = QuizQuestion.where(quiz_id: params[:id])
-    puts "finished quiz question querty"
+    @quiz_questions = QuizQuestion.joins(:question).where(quiz_id: params[:id])
   end
 
   # GET /quizzes/new
   def new
     @quiz = Quiz.new(quiz_questions: [QuizQuestion.new])
     @questions = Question.all
-
   end
 
   # GET /quizzes/1/edit

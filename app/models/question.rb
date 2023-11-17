@@ -1,5 +1,7 @@
 class Question < ApplicationRecord
     #Base Question Validation
+    has_many :quiz_questions
+    has_many :quiz, :through => :quiz_questions
     has_rich_text :title
     validates :question_type, :title, :bank, presence: true
     enum question_type: {
@@ -26,7 +28,6 @@ class Question < ApplicationRecord
 
     #Quiz Question Assocations
     has_many :quizzes, through: :quiz_questions
-
     has_many :quiz_questions, dependent: :destroy
     
     private 
