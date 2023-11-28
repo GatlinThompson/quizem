@@ -114,12 +114,12 @@ class QuestionsController < ApplicationController
         bank_attributes: [:bank] )
     end
 
-    def build_multiple_choice(count)
-      count.times { @question.multiple_choices.build }
+    def build_multiple_choice(num)
+      num.times { @question.multiple_choices.build }
     end
 
-    def build_multiple_answers(count)
-      count.times { @question.multiple_answers.build }
+    def build_multiple_answers(num)
+      num.times { @question.multiple_answers.build }
     end
 
 end

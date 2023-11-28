@@ -68,6 +68,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:name, :quiz_quiz_question, quiz_questions_attributes: [:id, :points, :quiz_id, :question_id ])
+      params.require(:quiz).permit(:name, :quiz_quiz_question, quiz_questions_attributes: [:id, :points, :quiz_id, :question_id, :_destroy ])
     end
 end

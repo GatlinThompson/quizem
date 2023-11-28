@@ -2,14 +2,55 @@
 <%= turbo_frame_tag "quiz_question_#{form.index}" do %>
   <%= form.hidden_field :id %>
 
-  <p>
+  <script>
+    function filterQuestions(index) {
+    //Get values  from :question_bank select
+    const selectedBank = document.getElementById("question-bank-select-" + index).value;
+
+    //Get Select Element to replace with filtered info
+    const questionSelect = document.getElementById("question-select-" + index);
+
+    //Turn Question.all into JSON
+    const questions = ("<%=  escape_javascript @questions.all.to_json %>");
+
+    //Filter Text
+    const filterText = questions.replace(/&quot;/ig, '"').replace(/&#39;/ig,"'").replace(/=&gt;/ig,':').replace(/\\u003c\/?[a-z]*\\u003e/ig,'')
+    
+    //Parse questions
+    const questionsJSON = JSON.parse(filterText);
+ 
+
+     let filteredQuestions = []
+
+     //Question bank is true filter through said question bank
+    if(selectedBank) {
+      filteredQuestions = questionsJSON.filter(question => question.bank === selectedBank);
+    }
+    else{
+      //Display all questions
+      filteredQuestions = questionsJSON;
+    }
+     
+    //Set question select to 1 for "blank" value
+    questionSelect.options.length = 1;
+
+    //Loops through to populate the select form
+    filteredQuestions.forEach(function(question) {
+        questionSelect.options.add(new Option(question.title.body, question.id));
+      });
+  }
+  </script>
+
+  
     <!- TODO: Filter out the question drop down for questions already used ->
     <! TODO: add selection for quiz bank to filter on ->
-    <span>Select Question </span>
+    <p>Select Question </p>
+    <span>Question Bank:</span>
+    <%= select_tag :question_bank, options_for_select(@questions.group(:bank).map {|question| [question.bank.titleize, question.bank]}), {id: "question-bank-select-#{form.index}", onChange: "filterQuestions(#{form.index})", include_blank: "All"} %>
     <%= form.select :question_id, @questions.map {|question| [question.title, question.id]},
-      { include_blank: ""}, {class: "form-select border border-secondary-subtle"}%>
+      { include_blank: "Choose A Question"}, {class: "form-select border border-secondary-subtle", id: "question-select-#{form.index}"}%>
     <%= form.number_field :points, :type => "number", :step => "0.1", :min => "0", class: "form-control border border-secondary-subtle", placeholder: "Enter Points"%>
-  </p>
+  
 
 
   <%= form.submit "destroy quiz question", 
@@ -17,4 +58,8 @@
         formmethod: :delete, 
         formnovalidate: true, 
         data: { turbo_frame: "quiz_question_#{form.index}" } %>
+
+      
 <% end %>
+
+
