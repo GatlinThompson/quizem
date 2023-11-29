@@ -12,23 +12,30 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :name, style: "display: block fs-4" %>
+    <%= form.text_field :name, class: "mb-5 w-100" %>
   </div>
 
-  <h4>Questions</h4>
+  <h3>Questions</h3>
+  <hr>
   <div id="survey_questions">
     <%= form.fields_for :survey_questions do |sq_form| %>
       <%= render "survey_questions/survey_questions", form: sq_form %>
     <% end %>
   </div>
-  <%= form.submit "Add Survey Question", 
+  <%= form.submit "Add Question", 
       formaction: survey_question_path(@survey.survey_questions.size), 
       formmethod: :post, 
       formnovalidate: true, 
-      id: "add-survey-question" %>
+      id: "add-survey-question",
+      class: "btn btn-outline-success" %>
+
+  <div class="d-flex justify-content-center mb-3 mt-5">
+    <%= form.submit class: "btn btn-success" %>
+  </div>
 
   <div>
-    <%= form.submit %>
+    <%= link_to "Back to surveys", surveys_path, class: "d-flex justify-content-center" %>
   </div>
+
 <% end %>

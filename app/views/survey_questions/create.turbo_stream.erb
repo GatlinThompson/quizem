@@ -2,7 +2,8 @@
 <%= fields model: @survey do |form| %>
   <%= form.fields_for :survey_questions, child_index: params[:index] do |sq_form| %>
     <%= turbo_stream.replace "add-survey-question" do %>
-      <%= form.submit "Add survey question", 
+      <%= form.submit "Add Question", 
+            class: "btn btn-outline-success",
             formaction: survey_question_path(sq_form.index.to_i + 1), 
             formmethod: :post, 
             formnovalidate: true, 

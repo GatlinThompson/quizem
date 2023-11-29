@@ -43,19 +43,31 @@
 
   
     <!- TODO: Filter out the question drop down for questions already used ->
-    <! TODO: add selection for survey bank to filter on ->
-    <p>Select Question </p>
-    <span>Question Bank:</span>
-    <%= select_tag :question_bank, options_for_select(@questions.group(:bank).map {|question| [question.bank.titleize, question.bank]}), {id: "question-bank-select-#{form.index}", onChange: "filterQuestions(#{form.index})", include_blank: "All"} %>
-    <%= form.select :question_id, @questions.map {|question| [question.title, question.id]},
-      { include_blank: "Choose A Question"}, {class: "form-select border border-secondary-subtle", id: "question-select-#{form.index}"}%>
+    <div class="container mb-4 mt-5">
+      <div class="row">  
+        <div class="col-3">
+          <span class="mb-4 fs-5">Question Bank:</span>
+        </div>  
+        <div class="col-3">
+          <%= select_tag :question_bank, options_for_select(@questions.group(:bank).map {|question| [question.bank.titleize, question.bank]}), {class: "form-select", id: "question-bank-select-#{form.index}", onChange: "filterQuestions(#{form.index})", include_blank: "All"} %>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <%= form.select :question_id, @questions.map {|question| [question.title, question.id]},
+        { include_blank: "Choose A Question"}, {class: "form-select border border-secondary-subtle", id: "question-select-#{form.index}"}%>
+    </div>
     
-  <%= form.submit "destroy survey question", 
-        formaction: survey_question_path(form.index, form.object.id), 
-        formmethod: :delete, 
-        formnovalidate: true, 
-        data: { turbo_frame: "survey_question_#{form.index}" } %>
 
+  <div class="d-flex justify-content-end mb-4">
+    <%= form.submit "Delete Question", 
+          formaction: survey_question_path(form.index, form.object.id), 
+          formmethod: :delete, 
+          formnovalidate: true, 
+          data: { turbo_frame: "survey_question_#{form.index}" },
+          class: "btn btn-outline-danger " %>
+  </div>  
+  <hr>
       
 <% end %>
 

@@ -1,10 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @survey %>
+<hr>
 
-<div>
-  <%= link_to "Edit this survey", edit_survey_path(@survey) %> |
-  <%= link_to "Back to surveys", surveys_path %>
-
-  <%= button_to "Destroy this survey", @survey, method: :delete %>
+<div class="d-flex justify-content-center">
+  <%= link_to "Edit Survey", edit_survey_path(@survey), class: "fs-4 pe-4" %>
+  <%= link_to "Back to Surveys", surveys_path, class: "fs-4 ps-4" %>
+</div>
+<div class="d-flex justify-content-center">
+  <%= button_to "Delete Survey", @survey, method: :delete, class: "col btn btn-danger fs-5 mt-3" %>
 </div>

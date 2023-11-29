@@ -1,14 +1,23 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Surveys</h1>
+<h1 class="pb-4">Surveys</h1>
+  <%= link_to "New Survey", new_survey_path, class: "col btn btn-primary fs-4 mb-2" %>
+<hr>
+
 
 <div id="surveys">
   <% @surveys.each do |survey| %>
-    <%= render survey %>
-    <p>
-      <%= link_to "Show this survey", survey %>
-    </p>
+    <div class="card mb-5 shadow-sm">
+      <div class="container py-3">
+        <div class="row">
+          <div class="col-9 fs-4">
+            <strong>Name:</strong> <%= survey.name %>
+          </div>
+          <div class="col-3 d-flex justify-content-end">
+            <%= link_to "Show Survey", survey, class: "col btn btn-success fs-5" %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New survey", new_survey_path %>
