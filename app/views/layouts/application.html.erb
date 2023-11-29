@@ -14,14 +14,14 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
 
-        <%= link_to class:"navbar-brand" do %>QUIZ'EM<% end %>
+        <%= link_to root_path, class:"navbar-brand link-primary" do %>QUIZ'EM<% end %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
             <li class="nav-item">
-              <%= link_to "New Question", new_question_url, class: "nav-link" %>
+              <%= link_to "New Question", new_question_url, class: "nav-link ps-4" %>
             </li>
             <li class="nav-item">
               <%= link_to "Question", questions_url, class: "nav-link ps-4" %>
