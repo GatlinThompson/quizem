@@ -11,7 +11,7 @@
     const questionSelect = document.getElementById("question-select-" + index);
 
     //Turn Question.all into JSON
-    const questions = ("<%=  escape_javascript @questions.all.to_json %>");
+    const questions = ("<%=  escape_javascript @questions.to_json %>");
 
     //Filter Text
     const filterText = questions.replace(/&quot;/ig, '"').replace(/&#39;/ig,"'").replace(/=&gt;/ig,':').replace(/\\u003c\/?[a-z]*\\u003e/ig,'')
