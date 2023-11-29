@@ -1,0 +1,16 @@
+<%# app/views/survey_questions/create.turbo_stream.erb %>
+<%= fields model: @survey do |form| %>
+  <%= form.fields_for :survey_questions, child_index: params[:index] do |sq_form| %>
+    <%= turbo_stream.replace "add-survey-question" do %>
+      <%= form.submit "Add survey question", 
+            formaction: survey_question_path(sq_form.index.to_i + 1), 
+            formmethod: :post, 
+            formnovalidate: true, 
+            id: "add-survey-question" %>
+    <% end %>
+
+    <%= turbo_stream.append "survey_questions" do %>
+      <%= render "survey_questions", form: sq_form %>
+    <% end %>
+  <% end %>
+<% end %>

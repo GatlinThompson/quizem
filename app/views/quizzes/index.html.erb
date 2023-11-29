@@ -1,25 +1,26 @@
 <p style="color: green"><%= notice %></p>
 
 <h1 class="pb-4">Quizzes</h1>
-<%= link_to "New quiz", new_quiz_path, class: "col btn btn-primary fs-4 mb-2" %>
+  <%= link_to "New quiz", new_quiz_path, class: "col btn btn-primary fs-4 mb-2" %>
 <hr>
 
 
-
-    <div class="row">
-      <div class="col-12">
-        <div id="quizzes">
-          <% @quizzes.each do |quiz| %>
-            <%= render quiz %>
-            <p>
-              <%= link_to "Show this quiz", quiz, class: "col btn btn-success fs-4" %>
-            </p>
-             <hr>
-          <% end %>
-         
+<div id="quizzes">
+  <% @quizzes.each do |quiz| %>
+    <div class="card mb-5 shadow-sm">
+      <div class="container py-3">
+        <div class="row">
+          <div class="col-9 fs-4">
+            <strong>Name:</strong> <%= quiz.name %>
+          </div>
+          <div class="col-3 d-flex justify-content-end">
+            <%= link_to "Show Quiz", quiz, class: "col btn btn-success fs-5" %>
+          </div>
         </div>
       </div>
     </div>
+  <% end %>
+</div>
 
 
 

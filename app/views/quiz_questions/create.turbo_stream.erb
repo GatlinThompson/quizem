@@ -2,7 +2,7 @@
 <%= fields model: @quiz do |form| %>
   <%= form.fields_for :quiz_questions, child_index: params[:index] do |qq_form| %>
     <%= turbo_stream.replace "add-quiz-question" do %>
-      <%= form.submit "Add quiz question", 
+      <%= form.submit "Add Question", class: "btn btn-outline-success", 
             formaction: quiz_question_path(qq_form.index.to_i + 1), 
             formmethod: :post, 
             formnovalidate: true, 

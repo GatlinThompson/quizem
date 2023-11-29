@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_043101) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_040643) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -97,6 +97,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_043101) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "survey_questions", force: :cascade do |t|
+    t.integer "survey_id", null: false
+    t.integer "question_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_survey_questions_on_question_id"
+    t.index ["survey_id"], name: "index_survey_questions_on_survey_id"
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "true_falses", force: :cascade do |t|
     t.integer "question_id", null: false
     t.boolean "correct_answer", default: true
@@ -111,5 +126,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_043101) do
   add_foreign_key "multiple_choices", "questions"
   add_foreign_key "quiz_questions", "questions"
   add_foreign_key "quiz_questions", "quizzes"
+  add_foreign_key "survey_questions", "questions"
+  add_foreign_key "survey_questions", "surveys"
   add_foreign_key "true_falses", "questions"
 end
