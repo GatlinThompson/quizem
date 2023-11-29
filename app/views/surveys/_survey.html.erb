@@ -1,0 +1,16 @@
+<div id="<%= dom_id survey %>">
+  <p>
+    <strong>Name:</strong>
+    <%= survey.name %>
+  </p>
+
+  <% if @survey_questions.present? %>
+    <h4>Survey Questions</h4>
+
+    <% @survey_questions.each_with_index do |survey_question, index| %>
+      <h5>Question <%=index + 1%></h5>
+      <%= survey_question.question.title %>
+    <% end %>
+  <% end %>
+
+</div>

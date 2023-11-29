@@ -1,0 +1,25 @@
+<%= form_with(model: survey_question) do |form| %>
+  <% if survey_question.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(survey_question.errors.count, "error") %> prohibited this survey_question from being saved:</h2>
+
+       <%= form.select :question_id, @questions.map { |question| [question.title, question.id] }, { include_blank: "" }, { class: "form-select border border-secondary-subtle" } %>
+
+      <ul>
+        <% survey_question.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :points, style: "display: block" %>
+    <%= form.text_field :points %>
+  </div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
