@@ -6,7 +6,7 @@
     <%= link_to "New Question", new_question_path , class: "col btn btn-primary fs-4"%>
   </div>
   
-  <div class="col-3">
+  <div class="col-lg-3 col-12">
     <%= form_with url: search_by_questions_url, method: :get, class: "form" do |f| %>
       <%#Question Bank Filter%>
       <div class="mb-2">
