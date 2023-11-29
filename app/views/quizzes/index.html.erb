@@ -1,14 +1,25 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Quizzes</h1>
+<h1 class="pb-4">Quizzes</h1>
+<%= link_to "New quiz", new_quiz_path, class: "col btn btn-primary fs-4 mb-2" %>
+<hr>
 
-<div id="quizzes">
-  <% @quizzes.each do |quiz| %>
-    <%= render quiz %>
-    <p>
-      <%= link_to "Show this quiz", quiz %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New quiz", new_quiz_path %>
+
+    <div class="row">
+      <div class="col-12">
+        <div id="quizzes">
+          <% @quizzes.each do |quiz| %>
+            <%= render quiz %>
+            <p>
+              <%= link_to "Show this quiz", quiz, class: "col btn btn-success fs-4" %>
+            </p>
+             <hr>
+          <% end %>
+         
+        </div>
+      </div>
+    </div>
+
+
+

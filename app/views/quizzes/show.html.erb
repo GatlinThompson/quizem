@@ -2,9 +2,10 @@
 
 <%= render @quiz %>
 
-<div>
-  <%= link_to "Edit this quiz", edit_quiz_path(@quiz) %> |
-  <%= link_to "Back to quizzes", quizzes_path %>
-
-  <%= button_to "Destroy this quiz", @quiz, method: :delete %>
+<div class="d-flex justify-content-center">
+  <%= link_to "Edit this quiz", edit_quiz_path(@quiz), class: "fs-4 pe-4" %>
+  <%= link_to "Back to quizzes", quizzes_path, class: "fs-4 ps-4" %>
+</div>
+<div class="d-flex justify-content-center">
+  <%= button_to "Destroy this quiz", @quiz, method: :delete, class: "col btn btn-danger fs-5 mt-3" %>
 </div>

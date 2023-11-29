@@ -11,10 +11,14 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to "New Question", new_question_url%>
-      <%= link_to "Question", questions_url%>
-      <%= link_to "Quizes", quizzes_url%>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary py-3">
+    
+
+        <%= link_to "New Question", new_question_url, class: "ps-5" %>
+        <%= link_to "Question", questions_url, class: "ps-5"%>
+        <%= link_to "Quizzes", quizzes_url, class: "ps-5"%>
+
+
     </nav>
     
     <div class="container pt-5">
