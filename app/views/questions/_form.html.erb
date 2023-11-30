@@ -24,10 +24,10 @@
     <%= f.select :bank, Question.group(:bank).map {|question| [question.bank.titleize, question.bank]},
     { include_blank: "Choose an existing question bank"}, {class: "form-select border border-secondary-subtle"}%>
     </div>
-    <div class="col-1 text-center">
+    <div class="col-12 text-center col-md-1 my-3">
     <p class="m-0 fw-light text-secondary">OR</p>
     </div>
-    <div class="col">
+    <div class="col-12 col-md">
       <%= f.label :new_bank, 'New Question Bank', style: "display: block", class: "form-label fs-5" %>
       <%= f.text_field :new_bank, class: "form-control border border-secondary-subtle", placeholder: "Create a new question bank"%>
     </div>   
@@ -36,7 +36,7 @@
   <%#Question Type Select%>
   <div class="row my-4"> 
     <% unless Question.where(id: question.id).exists? then %> 
-      <div class="col-5">
+      <div class="col-md-5 col-12">
         <%= f.label :question_type, {style: "display: block", for: "question-type-selection", class: "form-label fs-5" }  %>
         <%= f.select :question_type, Question.question_types.map { |key, value|  [key.titleize, key]},
         { include_blank: "Select a Question Type:"}, { id: "question-type-selection", onChange: "changeNestedForm(event)", 
@@ -90,9 +90,19 @@
       <hr class="my-4">
     </div>
 
+    <%#Matching Render%>
+    <div id="match-form" <% unless question.question_type == 'matching' then %>
+      style="display: none"
+    <% end %> >
+      <%= f.fields_for :matching do |matching| %>
+          <%= render "matching_fields", f: matching %>
+      <%end%>
+      <hr class="my-4">
+    </div>
+
   </div>
   <%#Form Submission%>
-  <div class="mt-4">
+  <div class="mt-4 mb-5">
     <%= f.submit class: "btn btn-primary fs-4 py-2"%>
   </div>
 <% end %>
@@ -103,5 +113,8 @@
 
 <%#Question type selection change script %>
 <% unless Question.where(id: question.id).exists? then %> 
- <%= javascript_include_tag "question_type.js" %>
+ <%= javascript_include_tag "question_types.js" %>
 <% end %>
+
+<script>
+</script>

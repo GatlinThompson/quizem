@@ -35,9 +35,9 @@
     questionSelect.options.length = 1;
 
     //Loops through to populate the select form
-    filteredQuestions.forEach(function(question) {
+    filteredQuestions.forEach(question => 
         questionSelect.options.add(new Option(question.title.body, question.id));
-      });
+      );
   }
   </script>
 

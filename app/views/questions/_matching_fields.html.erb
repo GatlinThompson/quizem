@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="row col-12 col-md-6 mb-5">
+        <div class="col-12">
+            <%= f.label :prompt_1, style: "display: block", class: "form-label fs-5"%>
+            <%= f.text_field :prompt_1 , class: "form-control"%> 
+        </div>
+
+        <div class="col-12">
+            <%= f.label :answer_1, style: "display: block", class: "form-label fs-5"%>
+            <%= f.select :answer_1, ([["Choose Matching Answer", nil]] + @list.map { |item| [item, item]}), {}, {class: "matching-select form-control"}%>
+            <p class="text-secondary m-0 ms-2">Type in choices to populate answers</p>
+        </div>    
+    </div>
+
+    <div class="row col-12 col-md-6 mb-5">
+        <div class="col-12">
+            <%= f.label :prompt_2, style: "display: block", class: "form-label fs-5"%>
+            <%= f.text_field :prompt_2 , class: "form-control"%> 
+        </div>
+
+        <div class="col-12">
+            <%= f.label :answer_2, style: "display: block", class: "form-label fs-5"%>
+            <%= f.select :answer_2, ([["Choose Matching Answer", nil]] + @list.map { |item| [item, item]}), {}, {class: "matching-select form-control"}%>
+            <p class="text-secondary m-0 ms-2">Type in choices to populate answers</p>
+        </div>    
+    </div>
+
+    <div class="row col-12 col-md-6 mb-5">
+        <div class="col-12">
+            <%= f.label :prompt_3, style: "display: block", class: "form-label fs-5"%>
+            <%= f.text_field :prompt_3 , class: "form-control"%> 
+        </div>
+
+        <div class="col-12">
+            <%= f.label :answer_3, style: "display: block", class: "form-label fs-5"%>
+            <%= f.select :answer_3, ([["Choose Matching Answer", nil]] + @list.map { |item| [item, item]}), {}, {class: "matching-select form-control"}%>
+            <p class="text-secondary m-0 ms-2">Type in choices to populate answers</p>
+        </div>    
+    </div>
+
+    <div class="row col-12 col-md-6 mb-5">
+        <div class="col-12">
+            <%= f.label :prompt_4, style: "display: block", class: "form-label fs-5"%>
+            <%= f.text_field :prompt_4 , class: "form-control"%> 
+        </div>
+
+        <div class="col-12">
+            <%= f.label :answer_4, style: "display: block", class: "form-label fs-5"%>
+            <%= f.select :answer_4, ([["Choose Matching Answer", nil]] + @list.map { |item| [item, item]}), {}, {class: "matching-select form-control"}%>
+            <p class="text-secondary m-0 ms-2">Type in choices to populate answers</p>
+        </div>    
+    </div>
+</div>
+
+<div class="row justify-content-center mt-2">
+    <h3 class="text-center mb-3 fs-1">Choices</h3>
+    <div class="col-12 col-md-5 mb-4">
+        <%=f.label :choice_1, style: "display: block", class: "form-label fs-5"%>
+        <%= f.text_field :choice_1, onChange: "addThis(event, 0)", class: "matching-choice form-control border border-secondary-subtle"%>
+    </div>
+    <div class="col-12 col-md-5 mb-4">
+        <%=f.label :choice_2, style: "display: block", class: "form-label fs-5"%>
+         <%= f.text_field :choice_2, onChange: "addThis(event, 1)", class: "matching-choice form-control border border-secondary-subtle"%>
+    </div>
+        
+    <div class="col-12 col-md-5 mb-4">
+        <%=f.label :choice_3, style: "display: block", class: "form-label fs-5"%>
+        <%= f.text_field :choice_3, onChange: "addThis(event, 2)", class: "matching-choice form-control border border-secondary-subtle"%> 
+    </div>
+    <div class="col-12 col-md-5 mb-4">
+        <%=f.label :choice_4, style: "display: block", class: "form-label fs-5"%>
+        <%= f.text_field :choice_4, onChange: "addThis(event, 3)", class: "matching-choice form-control border border-secondary-subtle"%>
+    </div>
+     
+</div>
+
+<script>
+    function addThis(event, choice) {
+        const answerSelect = document.querySelectorAll(".matching-select");
+        const choices = document.querySelectorAll(".matching-choice");
+
+        const saveChoice = []
+        choices.forEach(choiceID => {
+                saveChoice.push(choiceID.value)
+        })
+
+        answerSelect.forEach(select => {
+            select.options.length = 1;
+            saveChoice.forEach(item => {
+                if(item.trim().length >= 1)
+                    select.options.add(new Option(item, item))
+            })
+        })
+            
+    }
+</script>

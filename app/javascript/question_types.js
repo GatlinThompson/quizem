@@ -4,11 +4,13 @@ function changeNestedForm(event) {
   const tfForm = document.getElementById("tf-form");
   const mcForm = document.getElementById("mc-form");
   const maForm = document.getElementById("ma-form");
+  const matchForm = document.getElementById("match-form");
 
   //Sets all forms to display: none
   tfForm.style.display = "none";
   mcForm.style.display = "none";
   maForm.style.display = "none";
+  matchForm.style.display = "none";
 
   //Question section switch
   switch (event.target.value) {
@@ -21,8 +23,13 @@ function changeNestedForm(event) {
     case "multiple_answers":
       maForm.style.display = "block";
       break;
+    case "matching":
+      matchForm.style.display = "block";
+      break;
     default:
       tfForm.style.display = "none";
       mcForm.style.display = "none";
+      matchForm.style.display = "none";
+      maForm.style.display = "none";
   }
 }
