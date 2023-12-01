@@ -36,8 +36,8 @@
 
     //Loops through to populate the select form
     filteredQuestions.forEach(question => 
-        questionSelect.options.add(new Option(question.title.body, question.id));
-      );
+        {questionSelect.options.add(new Option(question.title.body, question.id));
+    });
   }
   </script>
   <div class="container mb-4 mt-5">
