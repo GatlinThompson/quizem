@@ -40,29 +40,28 @@
       );
   }
   </script>
-
   
-    <!- TODO: Filter out the question drop down for questions already used ->
     <div class="container mb-4 mt-5">
-      <div class="row">  
-        <div class="col-3">
-          <span class="mb-4 fs-5">Question Bank:</span>
+      <div class="d-flex flex-column flex-md-row">  
+        <div class="">
+          <span class="mb-4 fs-5 form-label me-3">Question Bank:</span>
         </div>  
-        <div class="col-3">
-          <%= select_tag :question_bank, options_for_select(@questions.group(:bank).map {|question| [question.bank.titleize, question.bank]}), {class: "form-select", id: "question-bank-select-#{form.index}", onChange: "filterQuestions(#{form.index})", include_blank: "All"} %>
+        <div class="col-12 col-md-5 mb-4 col-lg-3">
+          <%= select_tag :question_bank, options_for_select(@questions.group(:bank).map {|question| [question.bank.titleize, question.bank]}), {class: "form-select border border-secondary-subtle", id: "question-bank-select-#{form.index}", onChange: "filterQuestions(#{form.index})", include_blank: "All"} %>
         </div>
       </div>
-    </div>
-    <div class="mb-4">
+      <div class="mb-4 col-12">
       <%= form.select :question_id, @questions.map {|question| [question.title, question.id]},
-        { include_blank: "Choose A Question"}, {class: "form-select border border-secondary-subtle", id: "question-select-#{form.index}"}%>
+        { include_blank: "Choose A Question"}, {class: "form-select border border-secondary-subtle col-11", id: "question-select-#{form.index}"}%>
     </div>
-    <div class="mb-4">
+    <div class="mb-4 col-md-3 col-5">
       <%= form.number_field :points, :type => "number", :step => "0.1", :min => "0", class: "form-control border border-secondary-subtle", placeholder: "Enter Points"%>
     </div>
-  
+    </div>
+    
+    
 
-  <div class="d-flex justify-content-end mb-4">
+  <div class="d-flex justify-content-end mb-4 pt-4">
     <%= form.submit "Delete Question", 
           formaction: quiz_question_path(form.index, form.object.id), 
           formmethod: :delete, 

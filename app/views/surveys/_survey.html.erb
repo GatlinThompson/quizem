@@ -6,13 +6,11 @@
 
   <% if @survey_questions.present? %>
     <h4 class="fs-2">Survey Questions</h4>
-    <hr>
-
     <% @survey_questions.each_with_index do |survey_question, index| %>
-      <div class="row">
-        <div class="col-10 mb-5">
-          <h4>Question <%=index + 1%></h4>
-          <%= survey_question.question.title %>
+      <div class="row container">
+        <div class="col-12 mb-5">
+
+          <%= render "question_template", question: survey_question.question, index: index + 1 %>
         </div>
       </div>
     <% end %>

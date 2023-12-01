@@ -10,10 +10,12 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="col-12 d-flex justify-content-end">
+    <%= link_to "Back to Surveys", surveys_path, class: "btn btn-outline-primary" %>
+  </div>
   <div>
-    <%= form.label :name, style: "display: block fs-4" %>
-    <%= form.text_field :name, class: "mb-5 w-100" %>
+    <%= form.label :name, style: "display: block", class: "fs-3" %>
+    <%= form.text_field :name, class: "mb-5 form-control border border-secondary-subtle" %>
   </div>
 
   <h3>Questions</h3>
@@ -30,12 +32,8 @@
       id: "add-survey-question",
       class: "btn btn-outline-success" %>
 
-  <div class="d-flex justify-content-center mb-3 mt-5">
-    <%= form.submit class: "btn btn-success" %>
-  </div>
-
-  <div>
-    <%= link_to "Back to surveys", surveys_path, class: "d-flex justify-content-center" %>
+   <div class="d-flex justify-content-start mb-3 mt-5">
+    <%= form.submit class: "btn btn-primary fs-4 py-2" %>
   </div>
 
 <% end %>

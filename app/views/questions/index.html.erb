@@ -32,12 +32,13 @@
     <% end %>
 
     <% unless params[:search_by_bank].blank? && params[:search_by_question_type].blank? %>
-    <div class="d-flex  justify-content-end">
-      <p class=" danger-emphasis mb-0 mt-3">
-        <%= @questions.count %> result<%= (@questions.count > 1 || @questions.empty?) ? "s" : ""%> found
-      </p>
-      <% end %>
-    </div>
+      <div class="d-flex  justify-content-end">
+        <p class=" danger-emphasis mb-0 mt-3">
+          <%= @questions.count %> result<%= (@questions.count > 1 || @questions.empty?) ? "s" : ""%> found
+        </p>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 

@@ -25,10 +25,12 @@ class QuestionsController < ApplicationController
   def edit
     @question.new_bank = nil
      @list=[]
+     if @question.matching? then 
       @list.push @question.matching.choice_1
        @list.push  @question.matching.choice_2
         @list.push @question.matching.choice_3
          @list.push @question.matching.choice_4
+     end
   end
 
   # POST /questions or /questions.json

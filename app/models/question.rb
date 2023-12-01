@@ -34,6 +34,10 @@ class Question < ApplicationRecord
     #Quiz Question Assocations
     has_many :quizzes, through: :quiz_questions
     has_many :quiz_questions, dependent: :destroy
+
+    #Survey Question Assocations
+    has_many :surveys, through: :survey_questions
+    has_many :survey_questions, dependent: :destroy
     
     private 
     #Question Type Checkers
