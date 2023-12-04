@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-6 col-12">
+
+        <h3 class="text-center">Prompts/Answers</h3>
+        <hr>
+        <div class="row justify-content-center align-items-center">
+            <p class="col-12 col-md-5 p-0 mx-0 fs-4 text-md-end pe-4"><%= question.matching.prompt_1%>:</p>
+            <div class=" alert alert-success col col-md-5 text-center px-1">
+                <p class="mb-0"><%= question.matching.answer_1%></p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <p class="col-12 col-md-5 p-0 mx-0 fs-4 text-md-end pe-4"><%= question.matching.prompt_2%>:</p>
+            <div class=" alert alert-success col col-md-5 text-center px-1">
+                <p class="mb-0"><%= question.matching.answer_2%></p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <p class="col-12 col-md-5 p-0 mx-0 fs-4 text-md-end pe-4"><%= question.matching.prompt_3%>:</p>
+            <div class=" alert alert-success col col-md-5 text-center px-1">
+                <p class="mb-0"><%= question.matching.answer_3%></p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <p class="col-12 col-md-5 p-0 mx-0 fs-4 text-md-end pe-4"><%= question.matching.prompt_4%>:</p>
+            <div class=" alert alert-success col col-md-5 text-center px-1">
+                <p class="mb-0"><%= question.matching.answer_4%></p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-6 col-12">
+        <h3 class="text-center">Choices</h3>
+        <hr>
+        <ul>
+            <li class="list-group-item fs-4 text-center mb-2"><%= question.matching.choice_1%></li>
+            <li class="list-group-item fs-4 text-center mb-2"><%= question.matching.choice_2%></li>
+            <li class="list-group-item fs-4 text-center mb-2"><%= question.matching.choice_3%></li>
+            <li class="list-group-item fs-4 text-center mb-2"><%= question.matching.choice_4%></li>
+        </ul>
+    </div>
+</div>

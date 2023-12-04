@@ -2,11 +2,11 @@
 
 <div class="row pb-4 align-items-center">
   
-  <div class="col">
+  <div class="col my-5 my-md-0">
     <%= link_to "New Question", new_question_path , class: "col btn btn-primary fs-4"%>
   </div>
   
-  <div class="col-3">
+  <div class="col-lg-3 col-12">
     <%= form_with url: search_by_questions_url, method: :get, class: "form" do |f| %>
       <%#Question Bank Filter%>
       <div class="mb-2">
@@ -32,12 +32,13 @@
     <% end %>
 
     <% unless params[:search_by_bank].blank? && params[:search_by_question_type].blank? %>
-    <div class="d-flex  justify-content-end">
-      <p class=" danger-emphasis mb-0 mt-3">
-        <%= @questions.count %> result<%= (@questions.count > 1 || @questions.empty?) ? "s" : ""%> found
-      </p>
-      <% end %>
-    </div>
+      <div class="d-flex  justify-content-end">
+        <p class=" danger-emphasis mb-0 mt-3">
+          <%= @questions.count %> result<%= (@questions.count > 1 || @questions.empty?) ? "s" : ""%> found
+        </p>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 

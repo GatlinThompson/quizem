@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_040643) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_30_044146) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -47,6 +47,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_040643) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "matchings", force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.string "prompt_1"
+    t.string "answer_1"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "prompt_2"
+    t.string "answer_2"
+    t.string "prompt_3"
+    t.string "answer_3"
+    t.string "prompt_4"
+    t.string "answer_4"
+    t.string "choice_1"
+    t.string "choice_2"
+    t.string "choice_3"
+    t.string "choice_4"
+    t.index ["question_id"], name: "index_matchings_on_question_id"
   end
 
   create_table "multiple_answers", force: :cascade do |t|
@@ -122,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_040643) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "matchings", "questions"
   add_foreign_key "multiple_answers", "questions"
   add_foreign_key "multiple_choices", "questions"
   add_foreign_key "quiz_questions", "questions"

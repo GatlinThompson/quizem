@@ -8,7 +8,8 @@ class Question < ApplicationRecord
         true_false: "true_false",
         multiple_choice: "multiple_choice", 
         multiple_answers: "multiple_answers",
-        essay: "essay" 
+        essay: "essay",
+        matching: "matching"
     }
 
     #For when user creates a new bank on question
@@ -26,9 +27,17 @@ class Question < ApplicationRecord
     has_many :multiple_answers, inverse_of: :question, dependent: :destroy
     accepts_nested_attributes_for :multiple_answers, reject_if: :not_multiple_answers?
 
+    #Multiple Answers Validation
+    has_one :matching, inverse_of: :question, dependent: :destroy
+    accepts_nested_attributes_for :matching, reject_if: :not_matchings?
+
     #Quiz Question Assocations
     has_many :quizzes, through: :quiz_questions
     has_many :quiz_questions, dependent: :destroy
+
+    #Survey Question Assocations
+    has_many :surveys, through: :survey_questions
+    has_many :survey_questions, dependent: :destroy
     
     private 
     #Question Type Checkers
@@ -42,6 +51,10 @@ class Question < ApplicationRecord
 
     def not_multiple_answers?
         question_type != 'multiple_answers' 
+    end
+
+     def not_matchings?
+        question_type != 'matching' 
     end
 
      

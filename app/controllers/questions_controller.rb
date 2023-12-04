@@ -15,12 +15,22 @@ class QuestionsController < ApplicationController
     @question = Question.new
     build_multiple_choice(4)
     build_multiple_answers(4)
+    @question.build_matching
     @question.build_true_false
+    @list = [] 
+    @answer=[]
   end
 
   # GET /questions/1/edit
   def edit
     @question.new_bank = nil
+     @list=[]
+     if @question.matching? then 
+      @list.push @question.matching.choice_1
+       @list.push  @question.matching.choice_2
+        @list.push @question.matching.choice_3
+         @list.push @question.matching.choice_4
+     end
   end
 
   # POST /questions or /questions.json
@@ -33,7 +43,23 @@ class QuestionsController < ApplicationController
 
       @question.bank =  @question.bank.downcase
 
+     
+      @answer=[]
+      @answer.push params[:question][:matching_attributes][:answer_1]
+       @answer.push params[:question][:matching_attributes][:answer_2]
+        @answer.push params[:question][:matching_attributes][:answer_3]
+         @answer.push params[:question][:matching_attributes][:answer_4]
 
+      @list=[]
+      @list.push params[:question][:matching_attributes][:choice_1]
+       @list.push params[:question][:matching_attributes][:choice_2]
+        @list.push params[:question][:matching_attributes][:choice_3]
+         @list.push params[:question][:matching_attributes][:choice_4]
+
+         puts @list
+
+         puts params[:question][:matching_attributes]
+      puts "###############################################"
     respond_to do |format|
       if @question.save
         format.html { redirect_to questions_url, notice: "Question was successfully created." }
@@ -47,8 +73,15 @@ class QuestionsController < ApplicationController
         unless @question.multiple_answers? then
           build_multiple_answers(4)
         end
+
+        unless @question.matching? then
+          @question.build_matching
+        end
            
         @question.build_true_false
+
+        @list;
+        @answer
          
          format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -62,6 +95,12 @@ class QuestionsController < ApplicationController
     if params[:question][:new_bank].present?
         params[:question][:bank] = params[:question][:new_bank]
     end
+
+    @list=[]
+      @list.push params[:question][:matching_attributes][:choice_1]
+       @list.push params[:question][:matching_attributes][:choice_2]
+        @list.push params[:question][:matching_attributes][:choice_3]
+         @list.push params[:question][:matching_attributes][:choice_4]
     
     respond_to do |format|
       if @question.update(question_params)
@@ -111,6 +150,8 @@ class QuestionsController < ApplicationController
         multiple_choices_attributes: [:id, :option, :is_correct, :_destroy], 
         true_false_attributes: [:id, :correct_answer],
         multiple_answers_attributes: [:id, :option, :is_correct, :_destroy],
+        matching_attributes: [:id, :prompt_1, :prompt_2, :prompt_3,  :prompt_4, :answer_1, :answer_2, :answer_3, :answer_4,
+        :choice_1,  :choice_2, :choice_3, :choice_4, :_destroy],
         bank_attributes: [:bank] )
     end
 
@@ -120,6 +161,10 @@ class QuestionsController < ApplicationController
 
     def build_multiple_answers(num)
       num.times { @question.multiple_answers.build }
+    end
+
+    def build_matching(num)
+      num.times { @question.matchings.build }
     end
 
 end

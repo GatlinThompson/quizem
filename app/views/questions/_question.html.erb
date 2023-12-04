@@ -1,6 +1,6 @@
 <div id="<%= dom_id question %>">
 
-  <%#Question Bank and Type%>
+  <!-- Question Bank and Type -->
   <div class="d-flex justify-content-end pt-3 text-secondary" >
     <p>
       <strong>Question Type:</strong>
@@ -12,7 +12,7 @@
     </p>
   </div>
   
-  <%#Question Title%>
+  <!-- Question Title -->
   <div class="py-4">
     <h2>Question:</h2>
     <div class="fs-4">
@@ -20,9 +20,9 @@
     </div>
   </div>
 
-  <%#Question Type Display%>
+  <!-- Question Type Display -->
   <div class= "p-3">
-    <% if question.true_false?%>
+    <% if question.true_false? %>
        <div class="alert <%= question.true_false.correct_answer? ? 'alert-success fw-bold' : 'alert-secondary' %>">
         True  
       </div>
@@ -31,26 +31,29 @@
       </div>
     <% end %>
  
-    <% if question.multiple_choice?%>
-      <% question.multiple_choices.each do |choice|%>
-        <%#questions/question_option for when it's rendered in quizzes%>
+    <% if question.multiple_choice? %>
+      <% question.multiple_choices.each do |choice| %>
+        <!-- questions/question_option for when it's rendered in quizzes -->
         <%= render "questions/question_option", choice: choice %>
-      <%end%>
+      <% end %>
     <% end %>
 
-    <% if question.multiple_answers?%>
-      <% question.multiple_answers.each do |answer|%>
-        <%#questions/question_option for when it's rendered in quizzes%>
+    <% if question.multiple_answers? %>
+      <% question.multiple_answers.each do |answer| %>
+        <!-- questions/question_option for when it's rendered in quizzes -->
         <%= render "questions/question_option", choice: answer %>
-      <%end%>
+      <% end %>
+    <% end %>
+
+    <% if question.matching? %>
+      <!-- questions/matching_show for when it's rendered in quizzes -->
+      <%= render "questions/matching_show", question: question %>
     <% end %>
   </div>
 
-
-  
-  <%#Edit and Delete Buttons%>
+  <!-- Edit and Delete Buttons -->
   <div class="d-flex justify-content-between align-items-end px-3 my-2 pb-4">
-    <%= link_to edit_question_path(question), class: "btn btn-outline-primary px-5 mx-0 fs-4" do%> Edit <% end %>
+    <%= link_to edit_question_path(question), class: "btn btn-outline-primary px-5 mx-0 fs-4" do %> Edit <% end %>
     <%= button_to "Delete Question", question, method: :delete, class: " fs-5 fs-bold ms-auto btn btn-outline-danger py-0 px-2" %>
   </div>
 

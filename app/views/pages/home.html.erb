@@ -1,9 +1,21 @@
-<div class="container pt-5">
-  <h1><i class="bi bi-gem" style="color: red;"></i> Coming soon</h1>
-  <p>Site is under construction</p>
-  <%= link_to "New Question", new_question_url%>
-  <%= link_to "Question", questions_url%>
-  <%= link_to "Quizes", quizzes_url%>
 
-  <%= link_to "Quiz'em", root_path, class: "flex-grow-1 flex-shrink-1 m-5 p-5 text-center text-light bg-dark" %>
-</div>
+<main class="container">
+  <div class="py-5 row container mx-auto">
+    <div class="col-12">
+      <h1 class="fs-1 fw-bold text-center mb-1"><i class="bi bi-question-diamond-fill me-1"></i>QUIZ'EM</h1>
+      <h2 class="fs-3 text-center mb-5 text-center text-secondary">Make and Create Survey, Quizzes and Questions</h2>
+    </div>
+    <div class="col-12 col-lg-6 px-3 my-2">
+      <%= link_to "Make New Question", new_question_url, class: "btn btn-outline-primary col-12 fs-3 p-lg-4"%>
+    </div>
+    <div class="col-12 col-lg-6 px-3 my-2">
+      <%= link_to "See Questions", questions_url, class: "btn btn-outline-primary col-12 fs-3 p-lg-4"%>
+    </div>
+    <div class="col-12 col-lg-6 text-center px-3 my-2">
+      <%= link_to "See Quizes", quizzes_url, class: "btn btn-outline-primary col-12 fs-3 p-lg-4"%>
+    </div>
+    <div class="col-12 col-lg-6 px-3 my-2" >
+      <%= link_to "See Surveys", surveys_url, class: "btn btn-outline-primary col-12 fs-3 p-lg-4"%>
+    </div>
+  </div>
+</main>

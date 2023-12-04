@@ -58,3 +58,8 @@ How does the author use allegory to convey a political message?</p>", question_t
 
 question = Question.create(title: "<p>Analyze the causes and consequences of a significant event in world history, 
 such as the Industrial Revolution or the Renaissance.</p>", question_type: 'essay', bank: "history")
+
+
+question = Question.create(title: "<p>Match the famous authors with their notable works:</p>", question_type: 'matching', bank: "literature")
+
+Matching.create(question_id: question.id, prompt_1: "Jane Austen", answer_1: "Pride and Prejudice", choice_1: "Pride and Prejudice",  prompt_2: "F. Scott Fitzgerald", answer_2: "The Great Gatsby", choice_2: "Harry Potter and the Sorcerer's Stone", prompt_3: "J.K. Rowling", answer_3: "Harry Potter and the Sorcerer's Stone", choice_3: "The Great Gatsby",  prompt_4: "Gabriel García Márquez", answer_4: "One Hundred Years of Solitude", choice_4: "One Hundred Years of Solitude",)

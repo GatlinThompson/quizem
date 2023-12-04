@@ -3,10 +3,10 @@
 <%= render @survey %>
 <hr>
 
-<div class="d-flex justify-content-center">
-  <%= link_to "Edit Survey", edit_survey_path(@survey), class: "fs-4 pe-4" %>
-  <%= link_to "Back to Surveys", surveys_path, class: "fs-4 ps-4" %>
+<div class="d-flex justify-content-around justify-content-md-start">
+  <%= link_to "Edit Survey", edit_survey_path(@survey), class: "fs-4 btn btn-outline-primary" %>
+  <%= link_to "Back to Surveys", surveys_path, class: "fs-4 ms-4 btn btn-outline-primary" %>
 </div>
-<div class="d-flex justify-content-center">
-  <%= button_to "Delete Survey", @survey, method: :delete, class: "col btn btn-danger fs-5 mt-3" %>
+<div class="d-flex justify-content-end mb-5 mt-5 mt-md-0 me-3">
+  <%= button_to "Delete Survey", @survey, method: :delete, class: "col btn btn-outline-danger fs-5 mt-3" %>
 </div>

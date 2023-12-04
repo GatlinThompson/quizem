@@ -1,21 +1,16 @@
 <div id="<%= dom_id quiz %>">
-  <p class="fs-1 mb-5 px-3">
+  <p class="fs-1 mb-5">
     <strong>Name:</strong>
     <%= quiz.name %>
   </p>
 
   <% if @quiz_questions.present? %>
-    <h4 class="fs-2 px-3">Quiz Questions</h4>
-    <hr>
-
+    <h4 class="fs-2">Quiz Questions</h4>
     <% @quiz_questions.each_with_index do |quiz_question, index| %>
-      <div class="row px-3">
-        <div class="col-10 mb-5">
-          <h4>Question <%=index + 1%></h4>
-          <%= quiz_question.question.title %>
-        </div>
-        <div class="col-2 d-flex justify-content-right">
-          <p class="mb-5 fs-5"><strong>Points:</strong> <%= quiz_question.points %></p>
+      <div class="row container">
+        <div class="col-12 mb-5">
+
+          <%= render "question_template", question: quiz_question.question, index: index + 1, points: quiz_question.points %>
         </div>
       </div>
     <% end %>
