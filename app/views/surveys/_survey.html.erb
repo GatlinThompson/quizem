@@ -1,15 +1,15 @@
 <div id="<%= dom_id survey %>">
-  <p class="fs-1 mb-5">
+  <p class="fs-1 mb-5 px-3">
     <strong>Name:</strong>
     <%= survey.name %>
   </p>
 
   <% if @survey_questions.present? %>
-    <h4 class="fs-2">Survey Questions</h4>
+    <h4 class="fs-2 px-3">Survey Questions</h4>
     <hr>
 
     <% @survey_questions.each_with_index do |survey_question, index| %>
-      <div class="row">
+      <div class="row px-3">
         <div class="col-10 mb-5">
           <h4>Question <%=index + 1%></h4>
           <%= survey_question.question.title %>
